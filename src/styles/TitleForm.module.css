@@ -1,0 +1,50 @@
+.titleFormContainer {
+    width: 100%;
+    display: flex;
+    margin-top: 2rem;
+    flex-direction: column;
+}
+
+.titleFormContainer form{
+    display: grid;
+    grid-template-columns: repeat(2, 0.4fr);
+    gap: 1rem;
+}
+
+.titleFormContainer form input{
+    padding: 0.9rem 1.5rem;
+    border-radius: 9px;
+    outline: none;
+    border: none;
+
+    font-family: Inter, 'sans-serif';
+    transition: border 0.3s;
+}
+
+.titleFormContainer form input:focus {
+    border-bottom: 5px solid var(--purple);
+}
+
+.titleFormContainer button {
+    padding: 1rem 1rem;
+    width: 8rem;
+    
+    background: var(--purple);
+    color: var(--white);
+
+    margin: 1rem auto;
+    
+    border-radius: 5px;
+    border: none;
+    
+    transition: filter 0.2s;
+
+}
+
+.titleFormContainer button:hover {
+    filter: brightness(0.9);
+}
+
+.titleFormContainer button:focus {
+    outline: none;
+}
