@@ -37,7 +37,7 @@ export function AccountProvider({
     useEffect(() => {
         Cookies.set('level', String(level));
         Cookies.set('currentExperience', String(currentExperience));
-        Cookies.set('challengesCompleted', String(picturesCompleted))
+        Cookies.set('picturesCompleted', String(picturesCompleted))
     }, [level, currentExperience, picturesCompleted])
 
     function levelUp() {
