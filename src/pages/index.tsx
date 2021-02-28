@@ -28,6 +28,7 @@ export default function Home(props: HomeProps) {
             Inicio | Card Generator
           </title>
         </Head>
+
         <Header />
         <TitleForm />
       </div>
