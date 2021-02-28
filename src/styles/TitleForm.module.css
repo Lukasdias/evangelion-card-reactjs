@@ -9,6 +9,7 @@
     display: grid;
     grid-template-columns: repeat(2, 0.4fr);
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .titleFormContainer form input{
@@ -47,4 +48,41 @@
 
 .titleFormContainer button:focus {
     outline: none;
+}
+
+.titleFormContainer section{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    height: auto;
+
+    background: black;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
+
+    padding: 2rem 2rem;
+
+    border-radius: 7px;
+}
+
+.titleFormContainer section .FirstLine{
+    font-size: 7rem;
+}
+
+.titleFormContainer section .SecondLine{
+    font-size: 6.2rem;
+}
+
+.titleFormContainer section .ThirdLine{
+    font-size: 9rem;
+}
+
+.titleFormContainer section .FourthLine{
+    font-size: 4.25rem;
+}
+
+.titleFormContainer section .DescriptionLine{
+    font-size: 3.75rem;
 }
