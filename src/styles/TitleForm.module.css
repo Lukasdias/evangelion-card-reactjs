@@ -67,22 +67,43 @@
     border-radius: 7px;
 }
 
-.titleFormContainer section .FirstLine{
+.StyledFont {
+    font-family: 'Times New Roman', sans-serif !important;
+    font-weight: 600;
+    color: white;
+}
+
+.FirstLine{
     font-size: 7rem;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
 }
 
-.titleFormContainer section .SecondLine{
+.SecondLine{
     font-size: 6.2rem;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
 }
 
-.titleFormContainer section .ThirdLine{
+.ThirdLine{
     font-size: 9rem;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
 }
 
-.titleFormContainer section .FourthLine{
+.FourthLine{
     font-size: 4.25rem;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
 }
 
-.titleFormContainer section .DescriptionLine{
+.DescriptionLine{
     font-size: 3.75rem;
+    font-family: 'Times New Roman', sans-serif;
+    font-weight: 600;
+    color: white;
 }

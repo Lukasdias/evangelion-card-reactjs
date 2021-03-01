@@ -10,11 +10,11 @@
     margin: auto;
 }
 
-.headerContainer span{
-    display: flex;
+.title {
+    /* display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    text-align: center; */
 
     color: var(--purple);
     

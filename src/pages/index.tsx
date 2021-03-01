@@ -22,13 +22,12 @@ export default function Home(props: HomeProps) {
       currentExperience={props.currentExperience}
       picturesCompleted={props.picturesCompleted}
     >
-      <div className='container'>
+      <div className='px-4 py-4 w-screen'>
         <Head>
           <title>
             Inicio | Card Generator
           </title>
         </Head>
-
         <Header />
         <TitleForm />
       </div>
