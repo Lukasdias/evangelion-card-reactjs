@@ -7,6 +7,6 @@
  - React Context
 # Preview: 
  - <img 
-   src=""
+   src="https://github.com/Lukasdias/evangelion-card-reactjs/blob/main/eva-card-pic.png"
    alt="preview"
     />
