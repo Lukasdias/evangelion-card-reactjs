@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from "react";
-import { Stage, Layer, Rect, Text, Group, Transformer } from "react-konva";
+import React, { useRef, useEffect, forwardRef, useImperativeHandle } from "react";
+import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import Konva from "konva";
 
 export interface TextEffects {

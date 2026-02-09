@@ -23,10 +23,13 @@ app/
 └── globals.css        # Tailwind + CSS variables
 
 components/
-├── EpisodeCard.tsx           # Canvas rendering with Konva
-├── EpisodeCardGenerator.tsx  # Main UI controller
-├── LoadingSpinner.tsx        # Suspense fallback
-└── StructuredData.tsx        # Schema.org JSON-LD
+├── episode-card.tsx           # Canvas rendering with Konva
+├── episode-card-generator.tsx # Main UI controller
+├── loading-spinner.tsx        # Suspense fallback
+├── structured-data.tsx        # Schema.org JSON-LD
+├── trinity-indicator.tsx      # MAGI trinity status indicator
+├── status-badge.tsx           # Status badge component
+└── data-readout.tsx           # Data readout component
 ```
 
 ## Tech Stack
@@ -73,6 +76,7 @@ export interface EpisodeCardRef {
 
 ### Naming
 
+- **Files**: kebab-case (`episode-card.tsx`, `loading-spinner.tsx`)
 - **Components**: PascalCase (`EpisodeCard`)
 - **Props**: `{Component}Props`, **Refs**: `{Component}Ref`
 - **Functions**: camelCase (`handleExport`)

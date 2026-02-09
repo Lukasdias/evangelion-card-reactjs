@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import EpisodeCardGenerator from "@/components/EpisodeCardGenerator";
-import { StructuredData } from "@/components/StructuredData";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
+import EpisodeCardGenerator from "@/components/episode-card-generator";
+import { StructuredData } from "@/components/structured-data";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 export const metadata: Metadata = {
   title: "Evangelion Title Card Generator | MAGI System",
