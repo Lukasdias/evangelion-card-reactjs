@@ -24,13 +24,40 @@ app/
 
 components/
 ├── episode-card.tsx           # Canvas rendering with Konva
-├── episode-card-generator.tsx # Main UI controller
+├── episode-card-generator.tsx # Main UI controller (refactored)
 ├── loading-spinner.tsx        # Suspense fallback
 ├── structured-data.tsx        # Schema.org JSON-LD
 ├── trinity-indicator.tsx      # MAGI trinity status indicator
 ├── status-badge.tsx           # Status badge component
-└── data-readout.tsx           # Data readout component
+├── data-readout.tsx           # Data readout component
+├── app-header.tsx             # Application header
+├── mobile-menu.tsx            # Mobile menu (Radix Dialog)
+├── editor-tabs.tsx            # Tab interface (Radix Tabs)
+├── card-preview.tsx           # Card preview component
+└── data-stream.tsx            # Background data stream animation
+
+hooks/
+└── use-episode-card.ts        # Custom hooks for state management
+
+lib/
+└── presets.ts                 # Episode presets data
 ```
+
+app/
+├── layout.tsx # Root layout with fonts & metadata
+├── page.tsx # Main page component
+└── globals.css # Tailwind + CSS variables
+
+components/
+├── episode-card.tsx # Canvas rendering with Konva
+├── episode-card-generator.tsx # Main UI controller
+├── loading-spinner.tsx # Suspense fallback
+├── structured-data.tsx # Schema.org JSON-LD
+├── trinity-indicator.tsx # MAGI trinity status indicator
+├── status-badge.tsx # Status badge component
+└── data-readout.tsx # Data readout component
+
+````
 
 ## Tech Stack
 
@@ -53,7 +80,7 @@ Order: React → third-party → local → types
 import React, { useRef } from "react";
 import { Stage } from "react-konva";
 import { EpisodeCardRef } from "./EpisodeCard";
-```
+````
 
 ### Formatting
 
