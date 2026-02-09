@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Evangelion Title Card Generator
 
-## Getting Started
+A web application for creating title cards in the style of Neon Genesis Evangelion episodes. Built with Next.js 16, React, and Konva canvas.
 
-First, run the development server:
+## What It Does
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Generates PNG images of episode title cards with:
+- Three-line header text (e.g., "NEON GENESIS EVANGELION")
+- Episode label and title text
+- Adjustable typography (serif/sans-serif fonts)
+- Optional glow effects
+- Two aspect ratios: 900×675 (standard) and 1280×720 (wide)
+
+## Tech Stack
+
+- **Framework**: Next.js 16.1.6 with App Router
+- **Build Tool**: Turbopack (default in Next.js 16)
+- **UI**: React 19
+- **Canvas Rendering**: Konva + react-konva
+- **Styling**: Tailwind CSS v4
+- **Fonts**: 
+  - EPSON Kyouka (custom TTF, Evangelion-style)
+  - VT323 (Google Fonts, terminal interface)
+  - Times New Roman / Helvetica Neue (canvas text)
+
+## Project Structure
+
+```
+app/
+  ├── layout.tsx          # Root layout with metadata
+  ├── page.tsx            # Main page (server component)
+  └── globals.css         # Tailwind + custom CSS variables
+
+components/
+  ├── EpisodeCard.tsx     # Canvas rendering component
+  ├── EpisodeCardGenerator.tsx  # Main UI with controls
+  ├── StructuredData.tsx  # Schema.org JSON-LD
+  └── LoadingSpinner.tsx  # Suspense fallback
+
+public/
+  ├── fonts/              # TTF font files
+  ├── manifest.json       # PWA manifest
+  └── _headers            # Static asset headers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open http://localhost:3000
 
-## Learn More
+## Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Outputs to `dist/` directory as static files.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuration
 
-## Deploy on Vercel
+### Next.js (`next.config.ts`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `output: 'export'` - Static site generation
+- `distDir: 'dist'` - Output directory
+- `images.unoptimized: true` - Required for static export
+- `turbopack.root` - Set to avoid workspace detection issues
+- `experimental.optimizePackageImports` - Tree-shaking for Konva
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Canvas Dimensions
+
+- Standard: 900×675px (4:3)
+- Wide: 1280×720px (16:9)
+
+Text scaling factors:
+- Header lines 1-2: 0.62 horizontal squash
+- Header line 3: 0.57 horizontal squash
+- Episode label: 0.76 horizontal squash
+- Title: 0.76 (serif) or 0.80 (sans) horizontal squash
+
+## License
+
+MIT
