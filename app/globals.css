@@ -27,28 +27,26 @@
   --color-magi-grid: var(--magi-grid);
   --color-magi-text: var(--magi-text);
   --color-magi-text-dim: var(--magi-text-dim);
-  --font-vt323: var(--font-vt323), 'VT323', 'Courier New', monospace;
+  --font-vt323: var(--font-vt323), "VT323", "Courier New", monospace;
 }
 
 @layer base {
   body {
     background-color: var(--magi-bg);
     color: var(--magi-text);
-    font-family: var(--font-vt323), 'VT323', 'Courier New', monospace;
+    font-family: var(--font-vt323), "VT323", "Courier New", monospace;
     overflow-x: hidden;
   }
 }
 
 /* EPSON Kyouka Font */
 @font-face {
-  font-family: 'EPSON Kyouka';
-  src: url('/fonts/epkyouka.ttf') format('truetype');
+  font-family: "EPSON Kyouka";
+  src: url("/fonts/epkyouka.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
-
 
 /* CRT Scanline Effect */
 .crt-overlay {
@@ -57,10 +55,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.25) 50%
-  );
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
   background-size: 100% 4px;
   pointer-events: none;
   z-index: 9999;
@@ -69,14 +64,30 @@
 
 /* Screen flicker animation */
 @keyframes flicker {
-  0% { opacity: 0.97; }
-  5% { opacity: 0.95; }
-  10% { opacity: 0.97; }
-  15% { opacity: 0.94; }
-  20% { opacity: 0.98; }
-  50% { opacity: 0.95; }
-  80% { opacity: 0.97; }
-  100% { opacity: 0.96; }
+  0% {
+    opacity: 0.97;
+  }
+  5% {
+    opacity: 0.95;
+  }
+  10% {
+    opacity: 0.97;
+  }
+  15% {
+    opacity: 0.94;
+  }
+  20% {
+    opacity: 0.98;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  80% {
+    opacity: 0.97;
+  }
+  100% {
+    opacity: 0.96;
+  }
 }
 
 .crt-flicker {
@@ -85,21 +96,21 @@
 
 /* Text glow effect */
 .text-glow-amber {
-  text-shadow: 
+  text-shadow:
     0 0 5px var(--magi-amber),
     0 0 10px var(--magi-amber),
     0 0 20px var(--magi-amber-dim);
 }
 
 .text-glow-green {
-  text-shadow: 
+  text-shadow:
     0 0 5px var(--magi-green),
     0 0 10px var(--magi-green),
     0 0 20px var(--magi-green-dim);
 }
 
 .text-glow-cyan {
-  text-shadow: 
+  text-shadow:
     0 0 5px var(--magi-cyan),
     0 0 10px var(--magi-cyan),
     0 0 20px var(--magi-cyan);
@@ -107,7 +118,7 @@
 
 /* Grid background */
 .magi-grid {
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -117,13 +128,13 @@
 .magi-panel {
   background: linear-gradient(135deg, rgba(17, 17, 24, 0.95) 0%, rgba(10, 10, 15, 0.98) 100%);
   border: 1px solid var(--magi-grid);
-  box-shadow: 
+  box-shadow:
     inset 0 0 20px rgba(0, 212, 170, 0.05),
     0 0 0 1px rgba(0, 212, 170, 0.1);
 }
 
 .magi-panel::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -140,7 +151,7 @@
 
 .corner-bracket::before,
 .corner-bracket::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
@@ -164,27 +175,43 @@
 
 /* Blinking cursor */
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .cursor-blink::after {
-  content: '_';
+  content: "_";
   animation: blink 1s infinite;
   color: var(--magi-cyan);
 }
 
 /* Data stream animation */
 @keyframes dataStream {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 .data-stream {
   position: fixed;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
   font-size: 12px;
   color: var(--magi-green-dim);
   opacity: 0.3;
@@ -263,12 +290,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Focus States */
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.2);
 }
 
 /* Smooth transitions for interactive elements */
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
   transition: all 0.2s ease;
 }
 
@@ -295,7 +327,7 @@ button, input, textarea, select {
     width: 20px;
     margin-top: -8px;
   }
-  
+
   button {
     min-height: 44px;
     min-width: 44px;

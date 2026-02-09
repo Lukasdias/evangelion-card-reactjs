@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "oxlint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "konva": "^10.2.0",
@@ -22,6 +25,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "oxc": "^1.0.1",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

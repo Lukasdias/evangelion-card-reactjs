@@ -5,6 +5,7 @@ A web application for creating title cards in the style of Neon Genesis Evangeli
 ## What It Does
 
 Generates PNG images of episode title cards with:
+
 - Three-line header text (e.g., "NEON GENESIS EVANGELION")
 - Episode label and title text
 - Adjustable typography (serif/sans-serif fonts)
@@ -18,7 +19,7 @@ Generates PNG images of episode title cards with:
 - **UI**: React 19
 - **Canvas Rendering**: Konva + react-konva
 - **Styling**: Tailwind CSS v4
-- **Fonts**: 
+- **Fonts**:
   - EPSON Kyouka (custom TTF, Evangelion-style)
   - VT323 (Google Fonts, terminal interface)
   - Times New Roman / Helvetica Neue (canvas text)
@@ -76,6 +77,7 @@ Outputs to `dist/` directory as static files.
 - Wide: 1280×720px (16:9)
 
 Text scaling factors:
+
 - Header lines 1-2: 0.62 horizontal squash
 - Header line 3: 0.57 horizontal squash
 - Episode label: 0.76 horizontal squash

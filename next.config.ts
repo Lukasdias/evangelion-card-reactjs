@@ -1,13 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  distDir: 'dist',
+  output: "export",
+  distDir: "dist",
   images: {
     unoptimized: true,
   },
   turbopack: {
-    root: '/home/lukashdias/study/react/evangelion-card-reactjs',
+    root: "/home/lukashdias/study/react/evangelion-card-reactjs",
   },
 };
 

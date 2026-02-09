@@ -5,7 +5,8 @@ export function StructuredData() {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "Evangelion Title Card Generator",
-    description: "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects.",
+    description:
+      "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects.",
     applicationCategory: "DesignApplication",
     operatingSystem: "Any",
     offers: {
@@ -35,7 +36,8 @@ export function StructuredData() {
     datePublished: "2024-01-01",
     dateModified: "2024-01-01",
     inLanguage: "en",
-    keywords: "Evangelion, Neon Genesis Evangelion, title card, episode card, generator, anime, meme",
+    keywords:
+      "Evangelion, Neon Genesis Evangelion, title card, episode card, generator, anime, meme",
   };
 
   const breadcrumbData = {
@@ -57,9 +59,7 @@ export function StructuredData() {
     name: "MAGI System",
     url: "https://evangelion-card-generator.vercel.app",
     logo: "https://evangelion-card-generator.vercel.app/logo.png",
-    sameAs: [
-      "https://github.com/yourusername/evangelion-card-generator",
-    ],
+    sameAs: ["https://github.com/yourusername/evangelion-card-generator"],
   };
 
   return (

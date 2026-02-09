@@ -11,8 +11,19 @@ const vt323 = VT323({
 
 export const metadata: Metadata = {
   title: "Evangelion Title Card Generator | MAGI System",
-  description: "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects. Free online tool with MAGI System terminal interface.",
-  keywords: ["Evangelion", "Neon Genesis Evangelion", "title card", "episode card", "generator", "MAGI System", "NERV", "anime", "meme generator"],
+  description:
+    "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects. Free online tool with MAGI System terminal interface.",
+  keywords: [
+    "Evangelion",
+    "Neon Genesis Evangelion",
+    "title card",
+    "episode card",
+    "generator",
+    "MAGI System",
+    "NERV",
+    "anime",
+    "meme generator",
+  ],
   authors: [{ name: "MAGI System" }],
   creator: "MAGI System",
   publisher: "NERV",
@@ -22,7 +33,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Evangelion Title Card Generator | MAGI System",
-    description: "Create authentic Neon Genesis Evangelion episode title cards. Customize text, fonts, and effects with our MAGI System terminal interface.",
+    description:
+      "Create authentic Neon Genesis Evangelion episode title cards. Customize text, fonts, and effects with our MAGI System terminal interface.",
     url: "/",
     siteName: "MAGI System - Evangelion Card Generator",
     locale: "en_US",
@@ -39,7 +51,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Evangelion Title Card Generator | MAGI System",
-    description: "Create authentic Neon Genesis Evangelion episode title cards. Customize text, fonts, and effects.",
+    description:
+      "Create authentic Neon Genesis Evangelion episode title cards. Customize text, fonts, and effects.",
     images: ["/og-image.png"],
   },
   robots: {

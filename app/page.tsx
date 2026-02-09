@@ -6,7 +6,8 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export const metadata: Metadata = {
   title: "Evangelion Title Card Generator | MAGI System",
-  description: "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects. Free online tool with MAGI System terminal interface.",
+  description:
+    "Create authentic Neon Genesis Evangelion episode title cards with customizable text, fonts, and effects. Free online tool with MAGI System terminal interface.",
 };
 
 export default function Home() {

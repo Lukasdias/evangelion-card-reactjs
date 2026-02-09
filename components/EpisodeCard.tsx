@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Stage, Layer, Rect, Text, Group, Transformer } from 'react-konva';
-import Konva from 'konva';
+import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { Stage, Layer, Rect, Text, Group, Transformer } from "react-konva";
+import Konva from "konva";
 
 export interface TextEffects {
   glowEnabled: boolean;
@@ -21,29 +21,32 @@ interface EpisodeCardProps {
   botText: string;
   epText: string;
   titleText: string;
-  titleStyle?: 'serif' | 'sans';
-  titleAlign?: 'left' | 'center' | 'right';
-  aspectRatio?: 'standard' | 'wide';
+  titleStyle?: "serif" | "sans";
+  titleAlign?: "left" | "center" | "right";
+  aspectRatio?: "standard" | "wide";
   effects?: TextEffects;
 }
 
 const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
-  ({ 
-    topText,
-    midText,
-    botText,
-    epText,
-    titleText,
-    titleStyle = 'serif',
-    titleAlign = 'left',
-    aspectRatio = 'standard',
-    effects = {
-      glowEnabled: false,
-      glowColor: '#ffffff',
-      glowBlur: 20,
-      glowOpacity: 0.8,
+  (
+    {
+      topText,
+      midText,
+      botText,
+      epText,
+      titleText,
+      titleStyle = "serif",
+      titleAlign = "left",
+      aspectRatio = "standard",
+      effects = {
+        glowEnabled: false,
+        glowColor: "#ffffff",
+        glowBlur: 20,
+        glowOpacity: 0.8,
+      },
     },
-  }, ref) => {
+    ref,
+  ) => {
     const stageRef = useRef<Konva.Stage>(null);
     const group1Ref = useRef<Konva.Group>(null);
     const group2Ref = useRef<Konva.Group>(null);
@@ -52,11 +55,11 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
     const groupTitleRef = useRef<Konva.Group>(null);
 
     // Calculate dimensions based on aspect ratio
-    const canvasWidth = aspectRatio === 'wide' ? 1280 : 900;
-    const canvasHeight = aspectRatio === 'wide' ? 720 : 675;
-    const leftMargin = aspectRatio === 'wide' ? 115 : 75;
-    const rightBoundary = aspectRatio === 'wide' ? 1150 : 815;
-    
+    const canvasWidth = aspectRatio === "wide" ? 1280 : 900;
+    const canvasHeight = aspectRatio === "wide" ? 720 : 675;
+    const leftMargin = aspectRatio === "wide" ? 115 : 75;
+    const rightBoundary = aspectRatio === "wide" ? 1150 : 815;
+
     // Font sizes proportional to canvas height
     const smHeadSize = canvasHeight * 0.184;
     const lgHeadSize = canvasHeight * 0.308;
@@ -68,14 +71,14 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
     const midSquash = 0.62;
     const botSquash = 0.57;
     const epSquash = 0.76;
-    const titleSquash = titleStyle === 'sans' ? 0.8 : 0.76;
+    const titleSquash = titleStyle === "sans" ? 0.8 : 0.76;
 
     useImperativeHandle(ref, () => ({
       exportImage: () => {
         if (stageRef.current) {
-          return stageRef.current.toDataURL({ 
+          return stageRef.current.toDataURL({
             pixelRatio: 2,
-            mimeType: 'image/png'
+            mimeType: "image/png",
           });
         }
         return undefined;
@@ -111,24 +114,26 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
       }
     }, [topSquash, midSquash, botSquash, epSquash, titleSquash, leftMargin, canvasHeight]);
 
-    const bgColor = '#000000';
-    const textColor = '#FFFFFF';
+    const bgColor = "#000000";
+    const textColor = "#FFFFFF";
 
     // Calculate title position based on alignment
     const getTitleX = () => {
-      if (titleAlign === 'right') return rightBoundary / titleSquash;
-      if (titleAlign === 'center') return ((rightBoundary + leftMargin) / 2) / titleSquash;
+      if (titleAlign === "right") return rightBoundary / titleSquash;
+      if (titleAlign === "center") return (rightBoundary + leftMargin) / 2 / titleSquash;
       return leftMargin / titleSquash;
     };
 
     const titleX = getTitleX();
 
     // Glow config
-    const glowConfig = effects.glowEnabled ? {
-      shadowColor: effects.glowColor,
-      shadowBlur: effects.glowBlur,
-      shadowOpacity: effects.glowOpacity,
-    } : {};
+    const glowConfig = effects.glowEnabled
+      ? {
+          shadowColor: effects.glowColor,
+          shadowBlur: effects.glowBlur,
+          shadowOpacity: effects.glowOpacity,
+        }
+      : {};
 
     return (
       <Stage
@@ -139,13 +144,7 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
       >
         <Layer>
           {/* Black background */}
-          <Rect
-            x={0}
-            y={0}
-            width={canvasWidth}
-            height={canvasHeight}
-            fill={bgColor}
-          />
+          <Rect x={0} y={0} width={canvasWidth} height={canvasHeight} fill={bgColor} />
 
           {/* Line 1: NEON */}
           <Group ref={group1Ref}>
@@ -197,18 +196,24 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
 
           {/* Title */}
           <Group ref={groupTitleRef}>
-            {titleText.split('\n').map((line, index) => (
+            {titleText.split("\n").map((line, index) => (
               <Text
                 key={index}
                 text={line}
                 y={index * titleSize * 1.1}
                 fontSize={titleSize}
-                fontFamily={titleStyle === 'sans' ? "Helvetica Neue, Helvetica, Arial, sans-serif" : "Times New Roman"}
-                fontStyle={titleStyle === 'sans' ? "800" : "600"}
+                fontFamily={
+                  titleStyle === "sans"
+                    ? "Helvetica Neue, Helvetica, Arial, sans-serif"
+                    : "Times New Roman"
+                }
+                fontStyle={titleStyle === "sans" ? "800" : "600"}
                 fill={textColor}
                 align={titleAlign}
-                width={titleAlign === 'left' ? (rightBoundary - leftMargin) / titleSquash : undefined}
-                x={titleAlign === 'left' ? 0 : titleAlign === 'center' ? titleX : titleX}
+                width={
+                  titleAlign === "left" ? (rightBoundary - leftMargin) / titleSquash : undefined
+                }
+                x={titleAlign === "left" ? 0 : titleAlign === "center" ? titleX : titleX}
                 {...glowConfig}
               />
             ))}
@@ -216,9 +221,9 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
         </Layer>
       </Stage>
     );
-  }
+  },
 );
 
-EpisodeCard.displayName = 'EpisodeCard';
+EpisodeCard.displayName = "EpisodeCard";
 
 export default EpisodeCard;
