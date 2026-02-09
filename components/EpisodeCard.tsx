@@ -140,7 +140,7 @@ const EpisodeCard = forwardRef<EpisodeCardRef, EpisodeCardProps>(
         ref={stageRef}
         width={canvasWidth}
         height={canvasHeight}
-        className="rounded-lg overflow-hidden"
+        className="overflow-hidden rounded-lg"
       >
         <Layer>
           {/* Black background */}

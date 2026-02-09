@@ -1,14 +1,8 @@
 {
   "$schema": "./node_modules/oxc/configuration_schema.json",
-  "ignorePatterns": [
-    "node_modules/**",
-    ".next/**",
-    "dist/**",
-    "build/**",
-    "out/**"
-  ],
+  "ignorePatterns": ["node_modules/**", ".next/**", "dist/**", "build/**", "out/**"],
   "experimentalTailwindcss": {
-    "config": "./tailwind.config.js",
+    "tailwindStylesheet": "./app/globals.css",
     "attributes": ["class", "className"],
     "functions": ["clsx", "cn"],
     "preserveDuplicates": false,

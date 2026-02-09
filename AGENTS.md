@@ -46,10 +46,10 @@ components/
 Order: React → third-party → local → types
 
 ```typescript
-'use client';
-import React, { useRef } from 'react';
-import { Stage } from 'react-konva';
-import { EpisodeCardRef } from './EpisodeCard';
+"use client";
+import React, { useRef } from "react";
+import { Stage } from "react-konva";
+import { EpisodeCardRef } from "./EpisodeCard";
 ```
 
 ### Formatting
@@ -63,7 +63,7 @@ import { EpisodeCardRef } from './EpisodeCard';
 ```typescript
 interface EpisodeCardProps {
   topText: string;
-  aspectRatio?: 'standard' | 'wide';
+  aspectRatio?: "standard" | "wide";
 }
 
 export interface EpisodeCardRef {
@@ -71,13 +71,12 @@ export interface EpisodeCardRef {
 }
 ```
 
-### Naming Conventions
+### Naming
 
 - **Components**: PascalCase (`EpisodeCard`)
 - **Props**: `{Component}Props`, **Refs**: `{Component}Ref`
 - **Functions**: camelCase (`handleExport`)
-- **State**: `[value, setValue]`
-- **Constants**: UPPER_SNAKE_CASE
+- **State**: `[value, setValue]`, **Constants**: UPPER_SNAKE_CASE
 
 ### React Patterns
 
@@ -90,14 +89,13 @@ Component.displayName = 'Component';
 ```
 
 - Use `'use client'` for client components
-- Prefer early returns
-- Check `typeof window !== 'undefined'` for client-only logic
+- Prefer early returns, check `typeof window !== 'undefined'` for client-only logic
 
 ### Konva/Canvas
 
 ```typescript
-import 'konva/lib/shapes/Text';
-import 'konva/lib/shapes/Rect';
+import "konva/lib/shapes/Text";
+import "konva/lib/shapes/Rect";
 ```
 
 - Wrap in dynamic imports with `ssr: false`
@@ -106,61 +104,51 @@ import 'konva/lib/shapes/Rect';
 ### Tailwind CSS
 
 - Use semantic colors from globals.css (`magi-cyan`, `magi-bg`)
-- Responsive: `sm:`, `md:`, `lg:`
-- Arbitrary: `h-[calc(100vh-48px)]`
+- Responsive: `sm:`, `md:`, `lg:`, Arbitrary: `h-[calc(100vh-48px)]`
 
 ### Error Handling
 
 - Use try/catch in async functions
-- Log descriptive errors
-- Cleanup effects (removeEventListener, clearInterval)
+- Log descriptive errors, cleanup effects
 
 ## Static Export Notes
 
 `output: 'export'` means:
-- No API routes
-- Images need `unoptimized: true`
-- All pages prerendered at build time
-- Output to `dist/` directory
+
+- No API routes, images need `unoptimized: true`
+- All pages prerendered at build time, output to `dist/`
 
 ## Linting Configuration
 
 ### ESLint (Next.js)
 
-Config: `eslint.config.mjs`
-- Uses `eslint-config-next/core-web-vitals`
-- Uses `eslint-config-next/typescript`
-- Run: `npm run lint`
+Config: `eslint.config.mjs` - Uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`
 
 ### Oxlint
 
-Config: `.oxlintrc.json`
-- Plugins: import, typescript, react, jsx-a11y, next
+Config: `.oxlintrc.json` - Plugins: import, typescript, react, jsx-a11y, next
+
 - Categories: correctness=error, suspicious=warn
 - Rules: eqeqeq, no-unused-vars, react-hooks/rules-of-hooks, next/no-img-element
 
 ```bash
-npx oxlint --init      # Create config
-npx oxlint             # Lint all files
-npx oxlint --fix       # Auto-fix issues
+npx oxlint --init && npx oxlint && npx oxlint --fix
 ```
 
 ## Formatter Configuration
 
 ### Oxc Formatter
 
-Config: `.oxfmtrc.json`
-- Tailwind CSS class sorting enabled via `experimentalTailwindcss`
-- Sorts classes in `class` and `className` attributes
-- Supports `clsx` and `cn` utility functions
+Config: `.oxfmtrc.json` - Tailwind CSS class sorting enabled via `experimentalTailwindcss`
+
+- Sorts classes in `class` and `className` attributes, supports `clsx` and `cn` functions
 
 ```bash
-npx oxfmt --init       # Create config
-npx oxfmt              # Format all files
-npx oxfmt --check      # Check without writing
+npx oxfmt --init && npx oxfmt && npx oxfmt --check
 ```
 
 VS Code: Add to `.vscode/settings.json`:
+
 ```json
 {
   "editor.defaultFormatter": "oxc.oxc-vscode",
@@ -171,9 +159,7 @@ VS Code: Add to `.vscode/settings.json`:
 ## Pre-Commit Checklist
 
 1. `npm run build` - Verify static export
-2. `npm run lint` - ESLint check
-3. `npm run oxlint` - Additional linting
-4. `npm run format` - Format code
-5. TypeScript compiles without errors
-6. Test responsive behavior
-7. No hydration mismatches
+2. `npm run lint && npm run oxlint` - Linting
+3. `npm run format` - Format code
+4. TypeScript compiles without errors
+5. Test responsive behavior, no hydration mismatches

@@ -4,11 +4,11 @@ import React from "react";
 
 export function LoadingSpinner() {
   return (
-    <div className="min-h-screen bg-magi-bg flex items-center justify-center">
+    <div className="bg-magi-bg flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <div className="w-16 h-16 border-4 border-magi-cyan border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-magi-cyan text-lg animate-pulse">INITIALIZING MAGI SYSTEM...</p>
-        <p className="text-magi-text-dim text-sm mt-2">Loading interface components</p>
+        <div className="border-magi-cyan mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-t-transparent" />
+        <p className="text-magi-cyan animate-pulse text-lg">INITIALIZING MAGI SYSTEM...</p>
+        <p className="text-magi-text-dim mt-2 text-sm">Loading interface components</p>
       </div>
     </div>
   );

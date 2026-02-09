@@ -175,7 +175,7 @@ export default function EpisodeCardGenerator() {
 
   return (
     <div
-      className="min-h-screen magi-grid relative crt-flicker overflow-hidden"
+      className="magi-grid crt-flicker relative min-h-screen overflow-hidden"
       role="application"
       aria-label="Evangelion Title Card Generator"
     >
@@ -191,13 +191,13 @@ export default function EpisodeCardGenerator() {
 
       {isClient && (
         <div
-          className="fixed inset-0 overflow-hidden pointer-events-none opacity-20"
+          className="pointer-events-none fixed inset-0 overflow-hidden opacity-20"
           aria-hidden="true"
         >
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className="absolute text-magi-green-dim text-xs font-mono whitespace-nowrap"
+              className="text-magi-green-dim absolute font-mono text-xs whitespace-nowrap"
               style={{
                 left: `${i * 10}%`,
                 top: `${Math.random() * 100}%`,
@@ -212,20 +212,20 @@ export default function EpisodeCardGenerator() {
         </div>
       )}
 
-      <header className="relative z-30 bg-magi-bg-panel border-b border-magi-grid" role="banner">
-        <div className="h-12 flex items-center px-3 md:px-4">
-          <div className="hidden md:flex items-center gap-2 mr-6">
-            <div className="w-3 h-3 rounded-full bg-magi-red" />
-            <div className="w-3 h-3 rounded-full bg-magi-amber" />
-            <div className="w-3 h-3 rounded-full bg-magi-green" />
+      <header className="bg-magi-bg-panel border-magi-grid relative z-30 border-b" role="banner">
+        <div className="flex h-12 items-center px-3 md:px-4">
+          <div className="mr-6 hidden items-center gap-2 md:flex">
+            <div className="bg-magi-red h-3 w-3 rounded-full" />
+            <div className="bg-magi-amber h-3 w-3 rounded-full" />
+            <div className="bg-magi-green h-3 w-3 rounded-full" />
           </div>
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden mr-3 p-1 border border-magi-grid text-magi-cyan"
+            className="border-magi-grid text-magi-cyan mr-3 border p-1 md:hidden"
             aria-label="Toggle menu"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -235,18 +235,18 @@ export default function EpisodeCardGenerator() {
             </svg>
           </button>
 
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div className="w-2 h-2 bg-magi-cyan animate-pulse flex-shrink-0" />
-            <span className="text-base md:text-lg font-bold text-magi-cyan tracking-widest truncate">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <div className="bg-magi-cyan h-2 w-2 flex-shrink-0 animate-pulse" />
+            <span className="text-magi-cyan truncate text-base font-bold tracking-widest md:text-lg">
               MAGI SYSTEM
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-sm flex-shrink-0">
+          <div className="flex flex-shrink-0 items-center gap-2 text-sm">
             <button
               onClick={handleExport}
               disabled={isExporting}
-              className="bg-magi-amber hover:bg-magi-amber/90 text-magi-bg font-bold py-1.5 px-2 md:px-4 text-xs transition-all"
+              className="bg-magi-amber hover:bg-magi-amber/90 text-magi-bg px-2 py-1.5 text-xs font-bold transition-all md:px-4"
             >
               <span className="hidden sm:inline">{isExporting ? "..." : "EXPORT"}</span>
               <span className="sm:hidden">PNG</span>
@@ -256,21 +256,21 @@ export default function EpisodeCardGenerator() {
       </header>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-magi-bg/95 pt-12">
-          <div className="p-4 space-y-4">
+        <div className="bg-magi-bg/95 fixed inset-0 z-40 pt-12 md:hidden">
+          <div className="space-y-4 p-4">
             <h3 className="text-magi-cyan text-lg font-bold">QUICK LOAD</h3>
             {presets.map((preset, index) => (
               <button
                 key={index}
                 onClick={() => applyPreset(preset)}
-                className="w-full text-left p-4 border border-magi-grid"
+                className="border-magi-grid w-full border p-4 text-left"
               >
                 {preset.epText || preset.botText}
               </button>
             ))}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full py-3 border border-magi-cyan text-magi-cyan"
+              className="border-magi-cyan text-magi-cyan w-full border py-3"
             >
               CLOSE
             </button>
@@ -278,14 +278,14 @@ export default function EpisodeCardGenerator() {
         </div>
       )}
 
-      <main className="relative z-10 h-[calc(100vh-48px)] flex flex-col">
-        <section className="flex-1 bg-magi-bg min-h-0 relative" aria-label="Card Preview">
+      <main className="relative z-10 flex h-[calc(100vh-48px)] flex-col">
+        <section className="bg-magi-bg relative min-h-0 flex-1" aria-label="Card Preview">
           <div className="absolute inset-0 flex items-center justify-center p-2">
             <div
-              className="bg-black border-2 border-magi-grid"
+              className="border-magi-grid border-2 bg-black"
               style={{ transform: `scale(${canvasScale})`, transformOrigin: "center center" }}
             >
-              <div className="bg-magi-bg-panel border-b border-magi-grid px-3 py-1.5 flex items-center justify-between">
+              <div className="bg-magi-bg-panel border-magi-grid flex items-center justify-between border-b px-3 py-1.5">
                 <span className="text-magi-text text-xs">PREVIEW</span>
                 <div className="flex items-center gap-2 text-xs">
                   <button
@@ -322,18 +322,18 @@ export default function EpisodeCardGenerator() {
         </section>
 
         <section
-          className="h-auto max-h-[45vh] md:h-80 bg-magi-bg-panel border-t border-magi-grid flex flex-col md:flex-row"
+          className="bg-magi-bg-panel border-magi-grid flex h-auto max-h-[45vh] flex-col border-t md:h-80 md:flex-row"
           aria-label="Editor"
         >
           <nav
-            className="w-full md:w-48 border-b md:border-r border-magi-grid flex md:flex-col overflow-x-auto"
+            className="border-magi-grid flex w-full overflow-x-auto border-b md:w-48 md:flex-col md:border-r"
             role="tablist"
           >
             <button
               onClick={() => setActiveTab("content")}
               role="tab"
               aria-selected={activeTab === "content"}
-              className={`p-3 text-left whitespace-nowrap flex-shrink-0 ${activeTab === "content" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
+              className={`flex-shrink-0 p-3 text-left whitespace-nowrap ${activeTab === "content" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
             >
               Content
             </button>
@@ -341,7 +341,7 @@ export default function EpisodeCardGenerator() {
               onClick={() => setActiveTab("style")}
               role="tab"
               aria-selected={activeTab === "style"}
-              className={`p-3 text-left whitespace-nowrap flex-shrink-0 ${activeTab === "style" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
+              className={`flex-shrink-0 p-3 text-left whitespace-nowrap ${activeTab === "style" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
             >
               Style
             </button>
@@ -349,22 +349,22 @@ export default function EpisodeCardGenerator() {
               onClick={() => setActiveTab("effects")}
               role="tab"
               aria-selected={activeTab === "effects"}
-              className={`p-3 text-left whitespace-nowrap flex-shrink-0 ${activeTab === "effects" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
+              className={`flex-shrink-0 p-3 text-left whitespace-nowrap ${activeTab === "effects" ? "bg-magi-cyan/10 text-magi-cyan" : "text-magi-text"}`}
             >
               Effects
             </button>
           </nav>
 
-          <div className="flex-1 p-4 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto p-4">
             {activeTab === "content" && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <div>
                   <label className="text-magi-text-dim text-xs">First Line</label>
                   <input
                     type="text"
                     value={topText}
                     onChange={(e) => setTopText(e.target.value)}
-                    className="w-full bg-magi-bg border border-magi-grid text-magi-text px-3 py-2 text-sm"
+                    className="bg-magi-bg border-magi-grid text-magi-text w-full border px-3 py-2 text-sm"
                   />
                 </div>
                 <div>
@@ -373,7 +373,7 @@ export default function EpisodeCardGenerator() {
                     type="text"
                     value={midText}
                     onChange={(e) => setMidText(e.target.value)}
-                    className="w-full bg-magi-bg border border-magi-grid text-magi-text px-3 py-2 text-sm"
+                    className="bg-magi-bg border-magi-grid text-magi-text w-full border px-3 py-2 text-sm"
                   />
                 </div>
                 <div>
@@ -382,7 +382,7 @@ export default function EpisodeCardGenerator() {
                     type="text"
                     value={botText}
                     onChange={(e) => setBotText(e.target.value)}
-                    className="w-full bg-magi-bg border border-magi-grid text-magi-text px-3 py-2 text-sm"
+                    className="bg-magi-bg border-magi-grid text-magi-text w-full border px-3 py-2 text-sm"
                   />
                 </div>
                 <div>
@@ -391,7 +391,7 @@ export default function EpisodeCardGenerator() {
                     type="text"
                     value={epText}
                     onChange={(e) => setEpText(e.target.value)}
-                    className="w-full bg-magi-bg border border-magi-grid text-magi-text px-3 py-2 text-sm"
+                    className="bg-magi-bg border-magi-grid text-magi-text w-full border px-3 py-2 text-sm"
                   />
                 </div>
                 <div className="lg:col-span-2">
@@ -400,37 +400,37 @@ export default function EpisodeCardGenerator() {
                     value={titleText}
                     onChange={(e) => setTitleText(e.target.value)}
                     rows={3}
-                    className="w-full bg-magi-bg border border-magi-grid text-magi-text px-3 py-2 text-sm"
+                    className="bg-magi-bg border-magi-grid text-magi-text w-full border px-3 py-2 text-sm"
                   />
                 </div>
               </div>
             )}
 
             {activeTab === "style" && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                  <label className="text-magi-text-dim text-xs block mb-2">Font</label>
+                  <label className="text-magi-text-dim mb-2 block text-xs">Font</label>
                   <button
                     onClick={() => setTitleStyle("serif")}
-                    className={`w-full p-2 border ${titleStyle === "serif" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
+                    className={`w-full border p-2 ${titleStyle === "serif" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
                   >
                     Serif
                   </button>
                   <button
                     onClick={() => setTitleStyle("sans")}
-                    className={`w-full p-2 border mt-2 ${titleStyle === "sans" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
+                    className={`mt-2 w-full border p-2 ${titleStyle === "sans" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
                   >
                     Sans
                   </button>
                 </div>
                 <div>
-                  <label className="text-magi-text-dim text-xs block mb-2">Align</label>
+                  <label className="text-magi-text-dim mb-2 block text-xs">Align</label>
                   <div className="flex gap-2">
                     {(["left", "center", "right"] as const).map((align) => (
                       <button
                         key={align}
                         onClick={() => setTitleAlign(align)}
-                        className={`flex-1 p-2 border ${titleAlign === align ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
+                        className={`flex-1 border p-2 ${titleAlign === align ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
                       >
                         {align[0].toUpperCase()}
                       </button>
@@ -438,16 +438,16 @@ export default function EpisodeCardGenerator() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-magi-text-dim text-xs block mb-2">Ratio</label>
+                  <label className="text-magi-text-dim mb-2 block text-xs">Ratio</label>
                   <button
                     onClick={() => setAspectRatio("standard")}
-                    className={`w-full p-2 border ${aspectRatio === "standard" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
+                    className={`w-full border p-2 ${aspectRatio === "standard" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
                   >
                     900×675
                   </button>
                   <button
                     onClick={() => setAspectRatio("wide")}
-                    className={`w-full p-2 border mt-2 ${aspectRatio === "wide" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
+                    className={`mt-2 w-full border p-2 ${aspectRatio === "wide" ? "border-magi-cyan text-magi-cyan" : "border-magi-grid"}`}
                   >
                     1280×720
                   </button>
@@ -457,14 +457,14 @@ export default function EpisodeCardGenerator() {
 
             {activeTab === "effects" && (
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="mb-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-5 rounded-full p-0.5 ${effects.glowEnabled ? "bg-magi-cyan" : "bg-magi-grid"}`}
+                      className={`h-5 w-10 rounded-full p-0.5 ${effects.glowEnabled ? "bg-magi-cyan" : "bg-magi-grid"}`}
                     >
                       <button
                         onClick={() => updateEffect("glowEnabled", !effects.glowEnabled)}
-                        className={`w-4 h-4 bg-white rounded-full transition-transform ${effects.glowEnabled ? "translate-x-5" : "translate-x-0"}`}
+                        className={`h-4 w-4 rounded-full bg-white transition-transform ${effects.glowEnabled ? "translate-x-5" : "translate-x-0"}`}
                       />
                     </div>
                     <span className="text-magi-text text-sm">Glow</span>
@@ -479,7 +479,7 @@ export default function EpisodeCardGenerator() {
                           <button
                             key={color}
                             onClick={() => updateEffect("glowColor", color)}
-                            className={`w-8 h-8 rounded border-2 ${effects.glowColor === color ? "border-white" : "border-transparent"}`}
+                            className={`h-8 w-8 rounded border-2 ${effects.glowColor === color ? "border-white" : "border-transparent"}`}
                             style={{ backgroundColor: color }}
                           />
                         ))}
