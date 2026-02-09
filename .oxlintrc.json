@@ -1,46 +1,40 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["import", "typescript", "react", "jsx-a11y"],
-  "categories": {
-    "correctness": "error",
-    "suspicious": "warn",
-    "pedantic": "off",
-    "style": "off",
-    "restriction": "off",
-    "nursery": "off"
-  },
-  "rules": {
-    "eqeqeq": "error",
-    "no-unused-vars": "error",
-    "no-console": "warn",
-    "react/jsx-key": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "next/no-img-element": "warn",
-    "next/no-head-element": "error",
-    "import/no-default-export": "off"
-  },
+  "plugins": null,
+  "categories": {},
+  "rules": {},
   "settings": {
+    "jsx-a11y": {
+      "polymorphicPropName": null,
+      "components": {},
+      "attributes": {}
+    },
     "next": {
-      "rootDir": "."
+      "rootDir": []
     },
     "react": {
-      "version": "19.2.3"
+      "formComponents": [],
+      "linkComponents": [],
+      "version": null,
+      "componentWrapperFunctions": []
+    },
+    "jsdoc": {
+      "ignorePrivate": false,
+      "ignoreInternal": false,
+      "ignoreReplacesDocs": true,
+      "overrideReplacesDocs": true,
+      "augmentsExtendsReplacesDocs": false,
+      "implementsReplacesDocs": false,
+      "exemptDestructuredRootsFromChecks": false,
+      "tagNamePreference": {}
+    },
+    "vitest": {
+      "typecheck": false
     }
   },
   "env": {
-    "browser": true,
-    "es2024": true,
-    "node": true
+    "builtin": true
   },
   "globals": {},
-  "ignorePatterns": [
-    "node_modules/**",
-    ".next/**",
-    "dist/**",
-    "build/**",
-    "out/**",
-    "*.config.*",
-    "next-env.d.ts"
-  ]
+  "ignorePatterns": []
 }

@@ -22,8 +22,6 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
     "oxc": "^1.0.1",
     "oxfmt": "^0.28.0",
     "oxlint": "^1.43.0",
