@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+:root {
+  /* MAGI Terminal Color Palette */
+  --magi-bg: #0a0a0f;
+  --magi-bg-panel: #111118;
+  --magi-amber: #ffb000;
+  --magi-amber-dim: #8b6914;
+  --magi-green: #00ff41;
+  --magi-green-dim: #008f11;
+  --magi-cyan: #00d4aa;
+  --magi-red: #ff0040;
+  --magi-grid: #1a1a24;
+  --magi-text: #e0e0e0;
+  --magi-text-dim: #606070;
+}
+
+@theme inline {
+  --color-magi-bg: var(--magi-bg);
+  --color-magi-bg-panel: var(--magi-bg-panel);
+  --color-magi-amber: var(--magi-amber);
+  --color-magi-amber-dim: var(--magi-amber-dim);
+  --color-magi-green: var(--magi-green);
+  --color-magi-green-dim: var(--magi-green-dim);
+  --color-magi-cyan: var(--magi-cyan);
+  --color-magi-red: var(--magi-red);
+  --color-magi-grid: var(--magi-grid);
+  --color-magi-text: var(--magi-text);
+  --color-magi-text-dim: var(--magi-text-dim);
+  --font-vt323: var(--font-vt323), 'VT323', 'Courier New', monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--magi-bg);
+    color: var(--magi-text);
+    font-family: var(--font-vt323), 'VT323', 'Courier New', monospace;
+    overflow-x: hidden;
+  }
+}
+
+/* EPSON Kyouka Font */
+@font-face {
+  font-family: 'EPSON Kyouka';
+  src: url('/fonts/epkyouka.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+/* CRT Scanline Effect */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* Screen flicker animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.97; }
+  15% { opacity: 0.94; }
+  20% { opacity: 0.98; }
+  50% { opacity: 0.95; }
+  80% { opacity: 0.97; }
+  100% { opacity: 0.96; }
+}
+
+.crt-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+/* Text glow effect */
+.text-glow-amber {
+  text-shadow: 
+    0 0 5px var(--magi-amber),
+    0 0 10px var(--magi-amber),
+    0 0 20px var(--magi-amber-dim);
+}
+
+.text-glow-green {
+  text-shadow: 
+    0 0 5px var(--magi-green),
+    0 0 10px var(--magi-green),
+    0 0 20px var(--magi-green-dim);
+}
+
+.text-glow-cyan {
+  text-shadow: 
+    0 0 5px var(--magi-cyan),
+    0 0 10px var(--magi-cyan),
+    0 0 20px var(--magi-cyan);
+}
+
+/* Grid background */
+.magi-grid {
+  background-image: 
+    linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Terminal panel */
+.magi-panel {
+  background: linear-gradient(135deg, rgba(17, 17, 24, 0.95) 0%, rgba(10, 10, 15, 0.98) 100%);
+  border: 1px solid var(--magi-grid);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 212, 170, 0.05),
+    0 0 0 1px rgba(0, 212, 170, 0.1);
+}
+
+.magi-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--magi-cyan), transparent);
+  opacity: 0.5;
+}
+
+/* Decorative corner brackets */
+.corner-bracket {
+  position: relative;
+}
+
+.corner-bracket::before,
+.corner-bracket::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--magi-cyan);
+  opacity: 0.6;
+}
+
+.corner-bracket::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-bracket::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: var(--magi-cyan);
+}
+
+/* Data stream animation */
+@keyframes dataStream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.data-stream {
+  position: fixed;
+  font-family: 'VT323', monospace;
+  font-size: 12px;
+  color: var(--magi-green-dim);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: dataStream 8s linear infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--magi-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--magi-grid);
+  border: 1px solid var(--magi-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--magi-cyan);
+}
+
+/* Selection */
+::selection {
+  background: var(--magi-amber);
+  color: var(--magi-bg);
+}
+
+/* Custom Range Input Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--magi-grid);
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--magi-cyan);
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  margin-top: -6px;
+  box-shadow: 0 0 10px var(--magi-cyan);
+  transition: transform 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-track {
+  background: var(--magi-grid);
+  height: 4px;
+  border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: var(--magi-cyan);
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 10px var(--magi-cyan);
+}
+
+/* Focus States */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.2);
+}
+
+/* Smooth transitions for interactive elements */
+button, input, textarea, select {
+  transition: all 0.2s ease;
+}
