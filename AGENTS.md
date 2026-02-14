@@ -40,24 +40,8 @@ hooks/
 └── use-episode-card.ts        # Custom hooks for state management
 
 lib/
-└── presets.ts                 # Episode presets data
+└── presets.ts                 # Episode presets data (all 26 episodes + EOE)
 ```
-
-app/
-├── layout.tsx # Root layout with fonts & metadata
-├── page.tsx # Main page component
-└── globals.css # Tailwind + CSS variables
-
-components/
-├── episode-card.tsx # Canvas rendering with Konva
-├── episode-card-generator.tsx # Main UI controller
-├── loading-spinner.tsx # Suspense fallback
-├── structured-data.tsx # Schema.org JSON-LD
-├── trinity-indicator.tsx # MAGI trinity status indicator
-├── status-badge.tsx # Status badge component
-└── data-readout.tsx # Data readout component
-
-````
 
 ## Tech Stack
 

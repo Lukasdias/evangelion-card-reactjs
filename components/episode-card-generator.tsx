@@ -7,7 +7,7 @@ import { CardPreview } from "./card-preview";
 import { EditorTabs, ContentTab, StyleTab, EffectsTab } from "./editor-tabs";
 import { DataStream } from "./data-stream";
 import { DataReadout } from "./data-readout";
-import { PRESETS } from "@/lib/presets";
+import type { Preset } from "@/lib/presets";
 import {
   useCardState,
   useEffectsState,
@@ -35,7 +35,7 @@ export default function EpisodeCardGenerator() {
     setIsClient(true);
   }, []);
 
-  const handleSelectPreset = (preset: (typeof PRESETS)[0]) => {
+  const handleSelectPreset = (preset: Preset) => {
     actions.applyPreset(preset);
     setIsMobileMenuOpen(false);
   };
@@ -68,7 +68,6 @@ export default function EpisodeCardGenerator() {
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onOpenChange={setIsMobileMenuOpen}
-        presets={PRESETS}
         onSelectPreset={handleSelectPreset}
       />
 
