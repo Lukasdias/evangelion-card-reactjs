@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  turbopack: {
-    root: "/home/lukashdias/study/react/evangelion-card-reactjs",
-  },
 };
 
 export default nextConfig;

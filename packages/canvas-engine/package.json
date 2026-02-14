@@ -1,0 +1,38 @@
+{
+  "name": "@vignette/canvas-engine",
+  "version": "1.0.0",
+  "description": "Shared canvas rendering utilities for Vignette",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "format": "oxfmt"
+  },
+  "dependencies": {
+    "konva": "^10.2.0",
+    "react-konva": "^19.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
