@@ -1,0 +1,31 @@
+{
+  "name": "@vignette/core",
+  "version": "1.0.0",
+  "description": "Shared types and contracts for Vignette",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "format": "oxfmt"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
+    "react": "19.2.3",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

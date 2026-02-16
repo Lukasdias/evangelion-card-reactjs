@@ -1,0 +1,38 @@
+{
+  "name": "@vignette/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vignette/canvas-engine": "workspace:*",
+    "@vignette/core": "workspace:*",
+    "@vignette/themes": "workspace:*",
+    "framer-motion": "^12.33.0",
+    "konva": "^10.2.0",
+    "lucide-react": "^0.564.0",
+    "next": "16.1.6",
+    "radix-ui": "^1.4.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-konva": "^19.2.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "oxc": "^1.0.1",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

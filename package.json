@@ -1,35 +1,19 @@
 {
-  "name": "evangelion-card-reactjs",
-  "version": "0.1.0",
+  "name": "vignette",
   "private": true,
+  "version": "1.0.0",
+  "description": "A platform for creating stylized title cards from movies, series, and anime",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "oxlint",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check"
-  },
-  "dependencies": {
-    "framer-motion": "^12.33.0",
-    "konva": "^10.2.0",
-    "next": "16.1.6",
-    "radix-ui": "^1.4.3",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-konva": "^19.2.2"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "oxc": "^1.0.1",
-    "oxfmt": "^0.28.0",
-    "oxlint": "^1.43.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "turbo": "^2.3.0"
   },
+  "packageManager": "pnpm@10.29.3",
   "engines": {
     "node": ">=22.0.0"
   }
