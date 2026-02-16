@@ -1,4 +1,4 @@
-import type { ThemeConfig } from '@vignette/core'
+import type { ThemeConfig } from '@vignette-cards/core'
 import { evangelionPresets, defaultEvangelionState } from './presets'
 import EvangelionRenderer from './renderer'
 export type { EvangelionRendererRef } from './renderer'

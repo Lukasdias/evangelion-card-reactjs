@@ -1,6 +1,6 @@
 import { evangelionTheme } from './evangelion'
 import { twinPeaksTheme } from './twin-peaks'
-import type { ThemeConfig } from '@vignette/core'
+import type { ThemeConfig } from '@vignette-cards/core'
 
 export const themes: Record<string, ThemeConfig> = {
   evangelion: evangelionTheme,

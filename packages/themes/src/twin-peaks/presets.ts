@@ -1,4 +1,4 @@
-import type { CardPreset, CardState } from '@vignette/core'
+import type { CardPreset, CardState } from '@vignette-cards/core'
 
 export const twinPeaksPresets: CardPreset[] = [
   {

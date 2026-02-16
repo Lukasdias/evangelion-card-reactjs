@@ -1,4 +1,4 @@
-import type { ThemeConfig } from '@vignette/core'
+import type { ThemeConfig } from '@vignette-cards/core'
 import { twinPeaksPresets, defaultTwinPeaksState } from './presets'
 import TwinPeaksRenderer from './renderer'
 export type { TwinPeaksRendererRef } from './renderer'

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { getAllThemes } from '@vignette/themes'
+import { getAllThemes } from '@vignette-cards/themes'
 
 export const metadata: Metadata = {
   title: 'Vignette | Title Card Generator',

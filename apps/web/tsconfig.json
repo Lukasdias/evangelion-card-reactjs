@@ -20,12 +20,12 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@vignette/core": ["../../packages/core/dist/index.js"],
-      "@vignette/core/*": ["../../packages/core/dist/*.js"],
-      "@vignette/themes": ["../../packages/themes/dist/index.js"],
-      "@vignette/themes/*": ["../../packages/themes/dist/*.js"],
-      "@vignette/canvas-engine": ["../../packages/canvas-engine/dist/index.js"],
-      "@vignette/canvas-engine/*": ["../../packages/canvas-engine/dist/*.js"]
+      "@vignette-cards/core": ["../../packages/core/dist/index.js"],
+      "@vignette-cards/core/*": ["../../packages/core/dist/*.js"],
+      "@vignette-cards/themes": ["../../packages/themes/dist/index.js"],
+      "@vignette-cards/themes/*": ["../../packages/themes/dist/*.js"],
+      "@vignette-cards/canvas-engine": ["../../packages/canvas-engine/dist/index.js"],
+      "@vignette-cards/canvas-engine/*": ["../../packages/canvas-engine/dist/*.js"]
     }
   },
   "include": [

@@ -1,5 +1,5 @@
 {
-  "name": "@vignette/canvas-engine",
+  "name": "@vignette-cards/canvas-engine",
   "version": "1.0.0",
   "description": "Shared canvas rendering utilities for Vignette",
   "main": "./dist/index.js",

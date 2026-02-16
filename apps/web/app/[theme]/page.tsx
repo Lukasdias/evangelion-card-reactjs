@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getTheme, getThemeIds } from '@vignette/themes'
+import { getTheme, getThemeIds } from '@vignette-cards/themes'
 import type { Metadata } from 'next'
 import ThemePageClient from './client'
 

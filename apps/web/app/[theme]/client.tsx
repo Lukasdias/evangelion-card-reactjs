@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Pencil, Type, Sparkles, LayoutGrid, Download } from 'lucide-react'
-import type { ThemeConfig, CardState } from '@vignette/core'
-import { getCanvasDimensions } from '@vignette/canvas-engine'
+import type { ThemeConfig, CardState } from '@vignette-cards/core'
+import { getCanvasDimensions } from '@vignette-cards/canvas-engine'
 import {
   PropertyPanel,
   CollapsibleSection,

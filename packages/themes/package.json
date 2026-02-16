@@ -1,5 +1,5 @@
 {
-  "name": "@vignette/themes",
+  "name": "@vignette-cards/themes",
   "version": "1.0.0",
   "description": "Theme registry and implementations for Vignette",
   "main": "./dist/index.js",
@@ -19,7 +19,7 @@
     "format": "oxfmt"
   },
   "dependencies": {
-    "@vignette/core": "workspace:*",
+    "@vignette-cards/core": "workspace:*",
     "konva": "^10.2.0",
     "react-konva": "^19.2.2"
   },

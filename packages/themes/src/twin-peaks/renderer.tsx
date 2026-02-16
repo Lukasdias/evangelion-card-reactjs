@@ -3,7 +3,7 @@
 import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from 'react'
 import { Stage, Layer, Rect, Text, Image } from 'react-konva'
 import type Konva from 'konva'
-import type { CardState } from '@vignette/core'
+import type { CardState } from '@vignette-cards/core'
 
 export interface TwinPeaksRendererRef {
   exportImage: () => string | undefined

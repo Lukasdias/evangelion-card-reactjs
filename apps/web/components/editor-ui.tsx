@@ -16,7 +16,7 @@ import {
   LayoutGrid,
   Sun,
 } from 'lucide-react'
-import type { CardState } from '@vignette/core'
+import type { CardState } from '@vignette-cards/core'
 
 interface CollapsibleSectionProps {
   title: string

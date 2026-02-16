@@ -1,5 +1,5 @@
 {
-  "name": "@vignette/web",
+  "name": "@vignette-cards/web",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@vignette/canvas-engine": "workspace:*",
-    "@vignette/core": "workspace:*",
-    "@vignette/themes": "workspace:*",
+    "@vignette-cards/canvas-engine": "workspace:*",
+    "@vignette-cards/core": "workspace:*",
+    "@vignette-cards/themes": "workspace:*",
     "framer-motion": "^12.33.0",
     "konva": "^10.2.0",
     "lucide-react": "^0.564.0",
