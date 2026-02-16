@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd ../.. && turbo run build --filter=@vignette/web",
+  "buildCommand": "cd ../.. && turbo run build",
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "outputDirectory": "dist"
+  "framework": "nextjs"
 }
