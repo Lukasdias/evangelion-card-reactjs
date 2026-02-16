@@ -5,52 +5,51 @@ Guidance for agentic coding agents working in this repository.
 ## Build Commands
 
 ```bash
-npm run dev          # Development server (Turbopack)
-npm run build        # Production build (static export)
-npm run start        # Start production server
-npm run lint         # ESLint
-npm run oxlint       # Oxlint (Rust-based linter)
-npm run format       # Oxc formatter
-npm run format:check # Check formatting
+# Root commands (run from monorepo root)
+npm run build          # Build all packages and apps
+npm run dev            # Start development server
+npm run lint           # Run linters via turbo
+npm run format         # Format all code
+npm run typecheck      # Type-check all packages
+
+# Package-specific (from package directory)
+cd packages/core && npm run build          # Build single package
+cd packages/themes && npm run typecheck    # Type-check single package
+cd apps/web && npm run build               # Build web app only
+
+# Linting & Formatting
+npm run oxlint         # Rust-based linter (faster than ESLint)
+npm run oxlint --fix   # Fix auto-fixable issues
+npx oxfmt              # Format with Oxc formatter
+npx oxfmt --check      # Check formatting without writing
 ```
 
 ## Project Structure
 
 ```
-app/
-├── layout.tsx         # Root layout with fonts & metadata
-├── page.tsx           # Main page component
-└── globals.css        # Tailwind + CSS variables
-
-components/
-├── episode-card.tsx           # Canvas rendering with Konva
-├── episode-card-generator.tsx # Main UI controller (refactored)
-├── loading-spinner.tsx        # Suspense fallback
-├── structured-data.tsx        # Schema.org JSON-LD
-├── trinity-indicator.tsx      # MAGI trinity status indicator
-├── status-badge.tsx           # Status badge component
-├── data-readout.tsx           # Data readout component
-├── app-header.tsx             # Application header
-├── mobile-menu.tsx            # Mobile menu (Radix Dialog)
-├── editor-tabs.tsx            # Tab interface (Radix Tabs)
-├── card-preview.tsx           # Card preview component
-└── data-stream.tsx            # Background data stream animation
-
-hooks/
-└── use-episode-card.ts        # Custom hooks for state management
-
-lib/
-└── presets.ts                 # Episode presets data (all 26 episodes + EOE)
+vignette-cards/           # Monorepo root
+├── apps/
+│   └── web/               # Next.js 16 web application
+│       ├── app/           # App router pages
+│       ├── components/    # React components
+│       └── public/        # Static assets
+├── packages/
+│   ├── core/              # Shared types and contracts
+│   ├── themes/            # Theme implementations (Evangelion, Twin Peaks)
+│   └── canvas-engine/     # Canvas rendering utilities
+├── package.json           # Root package.json (turborepo)
+└── turbo.json             # Turborepo configuration
 ```
 
 ## Tech Stack
 
 - **Framework**: Next.js 16.1.6 (App Router, Turbopack)
+- **Monorepo**: Turborepo 2.x with pnpm workspaces
 - **React**: 19.2.3
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS v4
 - **Canvas**: Konva 10 + react-konva 19
-- **Linting**: ESLint 9, Oxlint 1.43
+- **Linting**: Oxlint 1.43
 - **Formatting**: Oxc formatter
 
 ## Code Style Guidelines
@@ -60,11 +59,12 @@ lib/
 Order: React → third-party → local → types
 
 ```typescript
-"use client";
-import React, { useRef } from "react";
-import { Stage } from "react-konva";
-import { EpisodeCardRef } from "./EpisodeCard";
-````
+'use client'
+import { forwardRef, useRef } from 'react'
+import { Stage } from 'react-konva'
+import { getCanvasDimensions } from '@vignette-cards/canvas-engine'
+import type { CardState } from '@vignette-cards/core'
+```
 
 ### Formatting
 
@@ -75,106 +75,104 @@ import { EpisodeCardRef } from "./EpisodeCard";
 ### TypeScript
 
 ```typescript
-interface EpisodeCardProps {
-  topText: string;
-  aspectRatio?: "standard" | "wide";
+// Interfaces for props
+interface TwinPeaksRendererProps {
+  state: CardState
+  width?: number
+  height?: number
 }
 
-export interface EpisodeCardRef {
-  exportImage: () => string | undefined;
+// Interfaces for refs
+export interface TwinPeaksRendererRef {
+  exportImage: () => string | undefined
 }
+
+// Type exports
+export type { ThemeConfig }
 ```
 
-### Naming
+### Naming Conventions
 
 - **Files**: kebab-case (`episode-card.tsx`, `loading-spinner.tsx`)
-- **Components**: PascalCase (`EpisodeCard`)
-- **Props**: `{Component}Props`, **Refs**: `{Component}Ref`
+- **Components**: PascalCase (`TwinPeaksRenderer`)
+- **Props**: `{Component}Props` (`TwinPeaksRendererProps`)
+- **Refs**: `{Component}Ref` (`TwinPeaksRendererRef`)
 - **Functions**: camelCase (`handleExport`)
-- **State**: `[value, setValue]`, **Constants**: UPPER_SNAKE_CASE
+- **State**: `[value, setValue]` pattern
+- **Constants**: UPPER_SNAKE_CASE
 
 ### React Patterns
 
 ```typescript
 const Component = forwardRef<RefType, Props>(({ prop }, ref) => {
-  useImperativeHandle(ref, () => ({ method: () => {} }));
-  return <div />;
-});
-Component.displayName = 'Component';
+  useImperativeHandle(ref, () => ({ 
+    exportImage: () => stageRef.current?.toDataURL() 
+  }))
+  return <div />
+})
+Component.displayName = 'Component'
 ```
 
 - Use `'use client'` for client components
-- Prefer early returns, check `typeof window !== 'undefined'` for client-only logic
+- Use `forwardRef` for components that need ref access
+- Always set `displayName` on forwardedRef components
 
-### Konva/Canvas
+### Canvas/Konva Patterns
 
 ```typescript
-import "konva/lib/shapes/Text";
-import "konva/lib/shapes/Rect";
-```
+import { Stage, Layer, Rect, Text } from 'react-konva'
+import type Konva from 'konva'
 
-- Wrap in dynamic imports with `ssr: false`
-- Always set `displayName` on forwardedRef components
+const stageRef = useRef<Konva.Stage>(null)
+
+// Export function via ref
+useImperativeHandle(ref, () => ({
+  exportImage: () => stageRef.current?.toDataURL({
+    pixelRatio: 2,
+    mimeType: 'image/png',
+  })
+}))
+```
 
 ### Tailwind CSS
 
-- Use semantic colors from globals.css (`magi-cyan`, `magi-bg`)
-- Responsive: `sm:`, `md:`, `lg:`, Arbitrary: `h-[calc(100vh-48px)]`
+- Use CSS variables from globals.css (`--theme-primary`, `--glass-border`)
+- Responsive: `sm:`, `md:`, `lg:`
+- Arbitrary values: `h-[calc(100vh-48px)]`
 
 ### Error Handling
 
-- Use try/catch in async functions
-- Log descriptive errors, cleanup effects
-
-## Static Export Notes
-
-`output: 'export'` means:
-
-- No API routes, images need `unoptimized: true`
-- All pages prerendered at build time, output to `dist/`
-
-## Linting Configuration
-
-### ESLint (Next.js)
-
-Config: `eslint.config.mjs` - Uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`
-
-### Oxlint
-
-Config: `.oxlintrc.json` - Plugins: import, typescript, react, jsx-a11y, next
-
-- Categories: correctness=error, suspicious=warn
-- Rules: eqeqeq, no-unused-vars, react-hooks/rules-of-hooks, next/no-img-element
-
-```bash
-npx oxlint --init && npx oxlint && npx oxlint --fix
-```
-
-## Formatter Configuration
-
-### Oxc Formatter
-
-Config: `.oxfmtrc.json` - Tailwind CSS class sorting enabled via `experimentalTailwindcss`
-
-- Sorts classes in `class` and `className` attributes, supports `clsx` and `cn` functions
-
-```bash
-npx oxfmt --init && npx oxfmt && npx oxfmt --check
-```
-
-VS Code: Add to `.vscode/settings.json`:
-
-```json
-{
-  "editor.defaultFormatter": "oxc.oxc-vscode",
-  "editor.formatOnSave": true
+```typescript
+try {
+  const dataUrl = rendererRef.current?.exportImage()
+  if (!dataUrl) throw new Error('Export failed')
+} catch (error) {
+  console.error('Export failed:', error)
 }
 ```
 
+## Adding a New Theme
+
+To add a theme like Breaking Bad:
+
+1. **Create theme directory** in `packages/themes/src/breaking-bad/`
+2. **Create renderer.tsx** following the Twin Peaks/Evangelion pattern
+3. **Create presets.ts** with default state and preset cards
+4. **Create index.ts** exporting the theme config
+5. **Register theme** in `packages/themes/src/index.ts`
+6. **Add background image** to `apps/web/public/`
+
+## Static Export
+
+`output: 'export'` in next.config.ts means:
+- No API routes
+- Images need `unoptimized: true`
+- All pages prerendered at build time
+- Output to `apps/web/dist/`
+
 ## Pre-Commit Checklist
 
-1. `npm run build` - Verify static export
-2. `npm run lint && npm run oxlint` - Linting
+1. `npm run build` - Verify all packages build
+2. `npm run lint` - Check for lint errors
 3. `npm run format` - Format code
-4. TypeScript compiles without errors
-5. Test responsive behavior, no hydration mismatches
+4. `npm run typecheck` - TypeScript check
