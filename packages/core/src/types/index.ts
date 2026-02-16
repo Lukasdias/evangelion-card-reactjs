@@ -51,7 +51,13 @@ export interface CardRendererProps {
   height: number
 }
 
-export type RendererComponent = React.ComponentType<CardRendererProps>
+export interface CardRendererRef {
+  exportImage: () => string | undefined
+}
+
+export type RendererComponent = React.ForwardRefExoticComponent<
+  CardRendererProps & React.RefAttributes<CardRendererRef>
+>
 
 export interface ThemeConfig {
   id: string

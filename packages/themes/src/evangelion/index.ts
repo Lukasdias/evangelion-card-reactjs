@@ -1,6 +1,7 @@
 import type { ThemeConfig } from '@vignette/core'
 import { evangelionPresets, defaultEvangelionState } from './presets'
 import EvangelionRenderer from './renderer'
+export type { EvangelionRendererRef } from './renderer'
 
 export const evangelionTheme: ThemeConfig = {
   id: 'evangelion',

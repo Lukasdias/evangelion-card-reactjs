@@ -11,46 +11,59 @@ export default function Home() {
   const themes = getAllThemes()
 
   return (
-    <main className='min-h-screen bg-gradient-to-b from-gray-900 to-black text-white'>
-      <div className='mx-auto max-w-6xl px-4 py-16'>
-        <div className='mb-16 text-center'>
-          <h1 className='mb-4 text-5xl font-bold tracking-tight'>Vignette</h1>
-          <p className='mx-auto max-w-2xl text-xl text-gray-400'>
+    <div className='relative min-h-screen overflow-hidden'>
+      <div className='mesh-bg' />
+      <div className='noise-overlay' />
+      
+      <main className='relative z-10 mx-auto max-w-6xl px-6 py-20'>
+        <div className='mb-20 text-center'>
+          <div className='mb-6 inline-block'>
+            <h1 className='animate-float text-6xl font-bold tracking-tight md:text-8xl'>
+              <span className='gradient-text'>Vignette</span>
+            </h1>
+          </div>
+          <p className='mx-auto max-w-2xl text-xl text-white/60'>
             Create stylized title cards from your favorite movies, series, and anime.
           </p>
         </div>
 
-        <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-          {themes.map((theme) => (
+        <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+          {themes.map((theme, index) => (
             <Link
               key={theme.id}
               href={`/${theme.id}`}
-              className='group relative overflow-hidden rounded-xl border border-gray-800 bg-gray-800/50 p-6 transition-all hover:border-gray-600 hover:bg-gray-800'
+              className='theme-card group'
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div
-                className='absolute inset-0 opacity-10 transition-opacity group-hover:opacity-20'
-                style={{ backgroundColor: theme.colors.background }}
-              />
-              <div className='relative'>
-                <div className='mb-2 flex items-center justify-between'>
-                  <h2 className='text-2xl font-bold'>{theme.name}</h2>
+              <div className='relative z-10'>
+                <div className='mb-4 flex items-center justify-between'>
+                  <h2 className='text-2xl font-bold text-white'>{theme.name}</h2>
                   {theme.year && (
-                    <span className='text-sm text-gray-500'>{theme.year}</span>
+                    <span className='rounded-full bg-white/5 px-3 py-1 text-sm text-white/40'>
+                      {theme.year}
+                    </span>
                   )}
                 </div>
-                <p className='mb-4 text-gray-400'>{theme.description}</p>
-                <div className='flex items-center gap-2 text-sm text-gray-500'>
+                <p className='mb-6 text-white/50'>{theme.description}</p>
+                <div className='flex items-center gap-3'>
                   <span
-                    className='inline-block h-3 w-3 rounded-full'
-                    style={{ backgroundColor: theme.colors.accent }}
+                    className='h-2 w-2 rounded-full'
+                    style={{ backgroundColor: theme.colors.accent, boxShadow: `0 0 10px ${theme.colors.accent}` }}
                   />
-                  {theme.presets.length} presets
+                  <span className='text-sm text-white/40'>
+                    {theme.presets.length} presets
+                  </span>
                 </div>
               </div>
+              
+              <div 
+                className='absolute -right-20 -top-20 h-40 w-40 rounded-full opacity-20 blur-3xl transition-opacity group-hover:opacity-40'
+                style={{ backgroundColor: theme.colors.accent }}
+              />
             </Link>
           ))}
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }

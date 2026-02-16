@@ -1,6 +1,7 @@
 import type { ThemeConfig } from '@vignette/core'
 import { twinPeaksPresets, defaultTwinPeaksState } from './presets'
 import TwinPeaksRenderer from './renderer'
+export type { TwinPeaksRendererRef } from './renderer'
 
 export const twinPeaksTheme: ThemeConfig = {
   id: 'twin-peaks',

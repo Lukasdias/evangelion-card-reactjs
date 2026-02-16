@@ -12,11 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@vignette/canvas-engine": "workspace:*",
     "@vignette/core": "workspace:*",
     "@vignette/themes": "workspace:*",
-    "@vignette/canvas-engine": "workspace:*",
     "framer-motion": "^12.33.0",
     "konva": "^10.2.0",
+    "lucide-react": "^0.564.0",
     "next": "16.1.6",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",

@@ -1,169 +1,396 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, Pencil, Type, Sparkles, LayoutGrid, Download } from 'lucide-react'
 import type { ThemeConfig, CardState } from '@vignette/core'
 import { getCanvasDimensions } from '@vignette/canvas-engine'
+import {
+  PropertyPanel,
+  CollapsibleSection,
+  ColorPicker,
+  VisualSlider,
+  Toggle,
+  PresetCard,
+  AddLineButton,
+  DraggableLineItem,
+  ZoomControl,
+  QuickActionsBar,
+} from '@/components/editor-ui'
 
 interface ThemePageClientProps {
   theme: ThemeConfig
 }
 
+interface RendererRef {
+  exportImage: () => string | undefined
+}
+
 export default function ThemePageClient({ theme }: ThemePageClientProps) {
   const [state, setState] = useState<CardState>(theme.defaultState)
   const [isClient, setIsClient] = useState(false)
-  const [showControls, setShowControls] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [showPanel, setShowPanel] = useState(true)
+  const [zoom, setZoom] = useState(1)
+  const [isExporting, setIsExporting] = useState(false)
+  const rendererRef = useRef<RendererRef>(null)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  const handleExport = () => {
-    console.log('Export functionality needs to be implemented with a different pattern')
-  }
+  const handleExport = useCallback(async () => {
+    if (!rendererRef.current?.exportImage) {
+      console.error('Export not available')
+      return
+    }
 
-  const updateHeaderLine = (index: number, value: string) => {
+    setIsExporting(true)
+    
+    try {
+      const dataUrl = rendererRef.current.exportImage()
+      if (!dataUrl) {
+        console.error('Failed to generate image')
+        return
+      }
+
+      const firstLine = state.headerLines[0]?.toLowerCase().replace(/\s+/g, '-') || theme.id
+      const timestamp = new Date().toISOString().split('T')[0]
+      const filename = `vignette-${firstLine}-${timestamp}.png`
+
+      const link = document.createElement('a')
+      link.href = dataUrl
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } catch (error) {
+      console.error('Export failed:', error)
+    } finally {
+      setIsExporting(false)
+    }
+  }, [state.headerLines, theme.id])
+
+  const updateHeaderLine = useCallback((index: number, value: string) => {
     setState((prev) => ({
       ...prev,
-      headerLines: prev.headerLines.map((line, i) => (i === index ? value : line)),
+      headerLines: prev.headerLines.map((line, i) =>
+        i === index ? value : line
+      ),
     }))
-  }
+  }, [])
+
+  const addHeaderLine = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      headerLines: [...prev.headerLines, ''],
+    }))
+  }, [])
+
+  const removeHeaderLine = useCallback((index: number) => {
+    setState((prev) => ({
+      ...prev,
+      headerLines: prev.headerLines.filter((_, i) => i !== index),
+    }))
+  }, [])
+
+  const updateEffect = useCallback(
+    <K extends keyof CardState['effects']>(key: K, value: CardState['effects'][K]) => {
+      setState((prev) => ({
+        ...prev,
+        effects: { ...prev.effects, [key]: value },
+      }))
+    },
+    []
+  )
+
+  const applyPreset = useCallback(
+    (preset: (typeof theme.presets)[0]) => {
+      setState((prev) => ({
+        ...prev,
+        headerLines: preset.headerLines,
+        label: preset.label,
+        title: preset.title,
+        subtitle: preset.subtitle,
+        style: { ...prev.style, ...preset.style },
+      }))
+    },
+    [theme.presets]
+  )
 
   const { width, height } = getCanvasDimensions(state.style.aspectRatio)
   const ThemeRenderer = theme.renderer
 
   return (
-    <div className='flex h-screen flex-col bg-black text-white'>
-      <header className='flex-none border-b border-gray-800 bg-gray-900/50'>
+    <div
+      className='relative flex h-screen flex-col overflow-hidden'
+      data-theme={theme.id}
+    >
+      <div className='mesh-bg' />
+      <div className='noise-overlay' />
+
+      <header className='app-header relative z-20 flex-none'>
         <div className='flex items-center justify-between px-6 py-4'>
           <div className='flex items-center gap-4'>
-            <Link href='/' className='text-xl font-bold text-gray-400 hover:text-white'>
-              ← Vignette
+            <Link
+              href='/'
+              className='flex items-center gap-2 text-white/60 transition-colors hover:text-white'
+            >
+              <ArrowLeft size={20} />
+              <span className='text-sm font-medium'>Vignette</span>
             </Link>
-            <span className='text-gray-600'>/</span>
-            <h1 className='text-xl font-bold' style={{ color: theme.colors.accent }}>
+            <span className='text-white/20'>/</span>
+            <h1
+              className='font-semibold'
+              style={{ color: theme.colors.accent }}
+            >
               {theme.name}
             </h1>
           </div>
           <div className='flex items-center gap-3'>
             <button
-              onClick={() => setShowControls(!showControls)}
-              className='rounded-lg border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:border-gray-600 hover:text-white'
+              onClick={() => setShowPanel(!showPanel)}
+              className='chameleon-btn-secondary rounded-lg px-4 py-2 text-sm'
             >
-              {showControls ? 'Hide Controls' : 'Edit'}
+              {showPanel ? 'Hide Panel' : 'Edit'}
             </button>
             <button
               onClick={handleExport}
-              className='rounded-lg px-4 py-2 text-sm font-semibold text-black transition-opacity hover:opacity-90'
-              style={{ backgroundColor: theme.colors.accent }}
+              disabled={isExporting}
+              className='chameleon-btn text-sm flex items-center gap-2'
             >
-              Export PNG
+              {isExporting ? (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  >
+                    <Download size={16} />
+                  </motion.div>
+                  Exporting...
+                </>
+              ) : (
+                <>
+                  <Download size={16} />
+                  Export
+                </>
+              )}
             </button>
           </div>
         </div>
       </header>
 
-      <div className='relative flex flex-1 overflow-hidden'>
-        <main
-          ref={containerRef}
-          className='flex flex-1 items-center justify-center p-8'
-          style={{ backgroundColor: '#0a0a0a' }}
+      <div className='canvas-workspace relative z-10 flex-1'>
+        <div
+          className='canvas-viewport'
+          style={{ transform: `scale(${zoom})` }}
         >
           {isClient && (
             <div
-              className='relative w-full'
+              className='preview-container w-full'
               style={{
-                maxWidth: 'min(100%, 1200px)',
                 aspectRatio: `${width} / ${height}`,
+                width: width > height ? '70vw' : 'auto',
+                maxWidth: '900px',
               }}
             >
-              <ThemeRenderer state={state} width={width} height={height} />
+              <ThemeRenderer
+                ref={rendererRef}
+                state={state}
+                width={width}
+                height={height}
+              />
             </div>
           )}
-        </main>
+        </div>
 
-        {showControls && (
-          <div className='w-96 flex-none overflow-y-auto border-l border-gray-800 bg-gray-900/95 p-6'>
-            <div className='space-y-6'>
-              <div>
-                <h2 className='mb-4 text-lg font-semibold'>Text</h2>
-                <div className='space-y-4'>
+        <AnimatePresence>
+          {showPanel && (
+            <PropertyPanel
+              title='Properties'
+              onClose={() => setShowPanel(false)}
+            >
+              <CollapsibleSection
+                title='Content'
+                icon={<Pencil size={16} />}
+              >
+                <div className='space-y-2'>
                   {state.headerLines.map((line, index) => (
-                    <div key={index}>
-                      <label className='mb-1 block text-sm text-gray-400'>
-                        Header Line {index + 1}
-                      </label>
-                      <input
-                        type='text'
-                        value={line}
-                        onChange={(e) => updateHeaderLine(index, e.target.value)}
-                        className='w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none'
-                      />
-                    </div>
+                    <DraggableLineItem
+                      key={index}
+                      index={index}
+                      value={line}
+                      onChange={(value) => updateHeaderLine(index, value)}
+                      onRemove={() => removeHeaderLine(index)}
+                      canRemove={state.headerLines.length > 1}
+                    />
                   ))}
+                </div>
+                <div className='mt-3'>
+                  <AddLineButton
+                    onClick={addHeaderLine}
+                    disabled={state.headerLines.length >= 6}
+                  />
+                </div>
+              </CollapsibleSection>
 
+              <CollapsibleSection
+                title='Style'
+                icon={<Type size={16} />}
+              >
+                <div className='space-y-4'>
                   <div>
-                    <label className='mb-1 block text-sm text-gray-400'>Label</label>
-                    <input
-                      type='text'
-                      value={state.label}
-                      onChange={(e) => setState((prev) => ({ ...prev, label: e.target.value }))}
-                      className='w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none'
-                    />
-                  </div>
-
-                  <div>
-                    <label className='mb-1 block text-sm text-gray-400'>Title</label>
-                    <input
-                      type='text'
-                      value={state.title}
-                      onChange={(e) => setState((prev) => ({ ...prev, title: e.target.value }))}
-                      className='w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none'
-                    />
-                  </div>
-
-                  {state.subtitle !== undefined && (
-                    <div>
-                      <label className='mb-1 block text-sm text-gray-400'>Subtitle</label>
-                      <input
-                        type='text'
-                        value={state.subtitle}
-                        onChange={(e) => setState((prev) => ({ ...prev, subtitle: e.target.value }))}
-                        className='w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none'
-                      />
+                    <label className='input-label mb-2 block'>
+                      Aspect Ratio
+                    </label>
+                    <div className='grid grid-cols-2 gap-2'>
+                      <button
+                        onClick={() =>
+                          setState((prev) => ({
+                            ...prev,
+                            style: { ...prev.style, aspectRatio: 'standard' },
+                          }))
+                        }
+                        className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
+                          state.style.aspectRatio === 'standard'
+                            ? 'bg-theme-primary/20 border-theme-primary text-white'
+                            : 'border-white/10 text-white/60 hover:border-white/20'
+                        }`}
+                      >
+                        4:3 Standard
+                      </button>
+                      <button
+                        onClick={() =>
+                          setState((prev) => ({
+                            ...prev,
+                            style: { ...prev.style, aspectRatio: 'wide' },
+                          }))
+                        }
+                        className={`px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
+                          state.style.aspectRatio === 'wide'
+                            ? 'bg-theme-primary/20 border-theme-primary text-white'
+                            : 'border-white/10 text-white/60 hover:border-white/20'
+                        }`}
+                      >
+                        16:9 Wide
+                      </button>
                     </div>
+                  </div>
+                </div>
+              </CollapsibleSection>
+
+              <CollapsibleSection
+                title='Effects'
+                icon={<Sparkles size={16} />}
+              >
+                <div className='space-y-4'>
+                  <Toggle
+                    checked={state.effects.glowEnabled}
+                    onChange={(checked) =>
+                      updateEffect('glowEnabled', checked)
+                    }
+                    label='Glow Effect'
+                    description='Add neon glow to text'
+                  />
+
+                  {state.effects.glowEnabled && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className='space-y-4 pl-2 border-l-2 border-theme-primary/30'
+                    >
+                      <div>
+                        <label className='input-label mb-2 block'>
+                          Glow Color
+                        </label>
+                        <ColorPicker
+                          value={state.effects.glowColor}
+                          onChange={(color) =>
+                            updateEffect('glowColor', color)
+                          }
+                        />
+                      </div>
+
+                      <VisualSlider
+                        label='Blur Intensity'
+                        value={state.effects.glowBlur}
+                        min={5}
+                        max={50}
+                        unit='px'
+                        onChange={(value) => updateEffect('glowBlur', value)}
+                      />
+
+                      <VisualSlider
+                        label='Opacity'
+                        value={Math.round(state.effects.glowOpacity * 100)}
+                        min={0}
+                        max={100}
+                        unit='%'
+                        onChange={(value) =>
+                          updateEffect('glowOpacity', value / 100)
+                        }
+                      />
+                    </motion.div>
                   )}
                 </div>
-              </div>
+              </CollapsibleSection>
 
-              <div>
-                <h2 className='mb-4 text-lg font-semibold'>Presets</h2>
-                <div className='max-h-64 space-y-2 overflow-y-auto'>
+              <CollapsibleSection
+                title='Presets'
+                icon={<LayoutGrid size={16} />}
+              >
+                <div className='space-y-2'>
                   {theme.presets.map((preset) => (
-                    <button
+                    <PresetCard
                       key={preset.id}
-                      onClick={() =>
-                        setState((prev) => ({
-                          ...prev,
-                          headerLines: preset.headerLines,
-                          label: preset.label,
-                          title: preset.title,
-                          subtitle: preset.subtitle,
-                          style: { ...prev.style, ...preset.style },
-                        }))
-                      }
-                      className='w-full rounded border border-gray-700 bg-gray-800 p-3 text-left transition-colors hover:border-gray-600 hover:bg-gray-700'
-                    >
-                      <div className='text-sm font-medium'>{preset.title}</div>
-                      <div className='text-xs text-gray-400'>{preset.label}</div>
-                    </button>
+                      title={preset.title}
+                      subtitle={preset.label}
+                      headerLines={preset.headerLines}
+                      onClick={() => applyPreset(preset)}
+                    />
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
+              </CollapsibleSection>
+            </PropertyPanel>
+          )}
+        </AnimatePresence>
+
+        <div className='toolbar-container'>
+          <QuickActionsBar
+            actions={[
+              {
+                icon: <Pencil size={20} />,
+                label: 'Edit',
+                onClick: () => setShowPanel(true),
+                isActive: showPanel,
+              },
+              {
+                icon: isExporting ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  >
+                    <Download size={20} />
+                  </motion.div>
+                ) : (
+                  <Download size={20} />
+                ),
+                label: isExporting ? 'Exporting...' : 'Export',
+                onClick: handleExport,
+              },
+            ]}
+          />
+        </div>
+
+        <div className='bottom-bar'>
+          <ZoomControl
+            zoom={zoom}
+            onZoomIn={() => setZoom((z) => Math.min(z * 1.2, 3))}
+            onZoomOut={() => setZoom((z) => Math.max(z / 1.2, 0.3))}
+            onReset={() => setZoom(1)}
+          />
+        </div>
       </div>
     </div>
   )

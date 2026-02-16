@@ -21,3 +21,5 @@ export function getThemeIds(): string[] {
 
 export { evangelionTheme, twinPeaksTheme }
 export type { ThemeConfig }
+export type { TwinPeaksRendererRef } from './twin-peaks'
+export type { EvangelionRendererRef } from './evangelion'
